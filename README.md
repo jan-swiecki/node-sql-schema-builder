@@ -2,6 +2,10 @@
 
 Currently only PostgreSQL supported.
 
+# Installation
+
+    npm install sql-schema-builder
+
 # Usage
 
     var Builder = require("./index");
