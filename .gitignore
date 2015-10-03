@@ -1,6 +1,9 @@
 # Created by https://www.gitignore.io/api/node,webstorm,sublimetext
 
 tmp
+validatejs.js
+validatejs2.js
+validator.js
 
 ### Node ###
 # Logs

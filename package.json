@@ -1,0 +1,26 @@
+{
+  "name": "sql-schema-builder",
+  "version": "0.1.0",
+  "description": "schema builder",
+  "main": "index.js",
+  "dependencies": {
+    "autowire": "^2.1.3",
+    "lodash": "^3.10.1",
+    "validate.js": "^0.8.0",
+    "validator": "^4.0.6"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/jan-swiecki/node-sql-schema-builder.git"
+  },
+  "author": "Jan Święcki <jan.swiecki@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jan-swiecki/node-sql-schema-builder/issues"
+  },
+  "homepage": "https://github.com/jan-swiecki/node-sql-schema-builder#readme"
+}
