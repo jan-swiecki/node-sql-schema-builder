@@ -1,6 +1,8 @@
 Autowire = require("autowire");
 Autowire.addImportPath("./lib/types");
+Autowire.addImportPath("./lib/validator");
 Autowire.alias("_", "lodash");
+Autowire.alias("Promise", "bluebird");
 
 module.exports = Autowire(function(Table, Column, Type, ForeignKey, InitTypes) {
 
@@ -12,3 +14,5 @@ module.exports = Autowire(function(Table, Column, Type, ForeignKey, InitTypes) {
   }
 
 });
+
+Autowire.wire("Builder", module.exports);
