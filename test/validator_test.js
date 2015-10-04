@@ -265,7 +265,7 @@ Autowire(function(_, uuid, path, assert, fs, Validator, Builder){
       var currTime = new Date().getTime();
 
       var i;
-      for(i = 0; i <= 1000; i++) {
+      for(i = 0; i <= 100; i++) {
         var delta = yearAndAHalf * Math.random();
         var date = new Date(currTime + delta);
 
@@ -285,7 +285,92 @@ Autowire(function(_, uuid, path, assert, fs, Validator, Builder){
 
     });
 
-      function testSuccess(msg, column, value) {
+    describe('JSON without default value', function() {
+      var column = Column("date", Type.JSON).notNull();
+
+      testSuccess('should succeed on good format', column, {});
+      testSuccess('should succeed on good format', column, {x: 1});
+      testSuccess('should succeed on good format', column, []);
+      testSuccess('should succeed on good format', column, [1,2,3]);
+      testSuccess('should succeed on good format', column, true);
+      testSuccess('should succeed on good format', column, false);
+      testSuccess('should succeed on good format', column, "string");
+      testSuccess('should succeed on good format', column, 123);
+
+      testError('should fail on null', column, null);
+      testError('should fail on wrong format', column, function() {});
+      testError('should fail on wrong format', column, Class);
+      testError('should fail on wrong format', column, new Class());
+
+      function Class() {
+      }
+
+      testError('should fail on wrong type', column, new RegExp(""));
+      testError('should fail on wrong type', column, new Date());
+      testError('should fail on wrong type', column, undefined);
+    });
+
+    describe('JSON with default value []', function() {
+      var column = Column("date", Type.JSON)
+        .default([])
+        .notNull();
+
+      testError('should fail on wrong format', column, {});
+      testError('should fail on wrong format', column, {x: 1});
+      testSuccess('should succeed on good format', column, []);
+      testSuccess('should succeed on good format', column, [1,2,3]);
+      testError('should fail on wrong format', column, true);
+      testError('should fail on wrong format', column, false);
+      testError('should fail on wrong format', column, "string");
+
+      testError('should fail on null', column, null);
+      testError('should fail on wrong format', column, function() {});
+      testError('should fail on wrong format', column, Class);
+      testError('should fail on wrong format', column, new Class());
+
+      function Class() {
+      }
+
+      testError('should fail on wrong type', column, 123);
+      testError('should fail on wrong type', column, new RegExp(""));
+      testError('should fail on wrong type', column, new Date());
+      testError('should fail on wrong type', column, undefined);
+    });
+
+    describe('JSON with default value {"info": "", "bulletPoints": []}', function() {
+      var column = Column("date", Type.JSON)
+        .default({"info": "", "bulletPoints": []})
+        .notNull();
+
+      testSuccess('should succeed on good format', column, {"info": "asd", "bulletPoints": ["123"]});
+      testSuccess('should succeed on good format', column, {"info": "asd", "bulletPoints": ["123", "5432"]});
+
+      testError('should fail on wrong format', column, {"info": "asd"});
+      testError('should fail on wrong format', column, {"bulletPoints": ["123"]});
+
+      testError('should fail on wrong format', column, {});
+      testError('should fail on wrong format', column, {x: 1});
+      testError('should fail on wrong format', column, []);
+      testError('should fail on wrong format', column, [1,2,3]);
+      testError('should fail on wrong format', column, true);
+      testError('should fail on wrong format', column, false);
+      testError('should fail on wrong format', column, "string");
+
+      testError('should fail on null', column, null);
+      testError('should fail on wrong format', column, function() {});
+      testError('should fail on wrong format', column, Class);
+      testError('should fail on wrong format', column, new Class());
+
+      function Class() {
+      }
+
+      testError('should fail on wrong type', column, 123);
+      testError('should fail on wrong type', column, new RegExp(""));
+      testError('should fail on wrong type', column, new Date());
+      testError('should fail on wrong type', column, undefined);
+    });
+
+    function testSuccess(msg, column, value) {
       it(msg+": "+value, function(done) {
         var validationProperties = column.getValidationProperties();
         Validator(validationProperties, value, column.name).then(wrap(done)).catch(function(err){
