@@ -20,7 +20,7 @@ Autowire(function(_, uuid, path, assert, fs, Validator, Builder){
     };
   }
 
-  describe("Schema builder", function(){
+  describe("Validator", function(){
 
     var Table = Builder.Table;
     var Column = Builder.Column;
@@ -166,7 +166,7 @@ Autowire(function(_, uuid, path, assert, fs, Validator, Builder){
     });
 
     describe('Timestamp with time zone validation', function(){
-      var column = Column("data", Type.TIMESTAMPTZ).notNull();
+      var column = Column("date", Type.TIMESTAMPTZ).notNull();
 
       testSuccess('should succeed on good format', column, '1999-01-08');
       testSuccess('should succeed on good format', column, '1999-01-08 04:05:06');
@@ -175,6 +175,9 @@ Autowire(function(_, uuid, path, assert, fs, Validator, Builder){
       testSuccess('should succeed on good format', column, '9999-12-31 23:59:59+14');
       testSuccess('should succeed on good format', column, '9999-12-31 23:59:59-11');
       testSuccess('should succeed on good format', column, '9999-12-31 23:59:59+00');
+
+      // failing dates found in full validation
+      testSuccess('should succeed on good format', column, '2015-10-04 00:34:52');
 
       testError('should fail on null', column, null);
 
@@ -212,7 +215,7 @@ Autowire(function(_, uuid, path, assert, fs, Validator, Builder){
     });
 
     describe('Timestamp without time zone validation', function(){
-      var column = Column("data", Type.TIMESTAMP).notNull();
+      var column = Column("date", Type.TIMESTAMP).notNull();
 
       testSuccess('should succeed on good format', column, '1999-01-08');
       testSuccess('should succeed on good format', column, '1999-01-08 04:05:06');
@@ -253,7 +256,36 @@ Autowire(function(_, uuid, path, assert, fs, Validator, Builder){
       testError('should fail on wrong type', column, undefined);
     });
 
-    function testSuccess(msg, column, value) {
+    describe('Timestamp with time zone FULL VALIDATION', function() {
+      var column = Column("date", Type.TIMESTAMPTZ).notNull();
+
+      // approx 1000 deltaTimes in one year
+      //var deltaTime = 1036800;
+      var yearAndAHalf = 1.5*24*60*60*265*1000;
+      var currTime = new Date().getTime();
+
+      var i;
+      for(i = 0; i <= 1000; i++) {
+        var delta = yearAndAHalf * Math.random();
+        var date = new Date(currTime + delta);
+
+        var timestamp = date.getFullYear()+
+          "-"+prefix(date.getMonth()+1)+
+          "-"+prefix(date.getDay()+1)+
+          " "+prefix(date.getHours())+
+          ":"+prefix(date.getMinutes())+
+          ":"+prefix(date.getSeconds());
+
+        testSuccess('should succeed on good format', column, timestamp);
+
+        function prefix(x) {
+          return x < 10 ? "0"+x : x+"";
+        }
+      }
+
+    });
+
+      function testSuccess(msg, column, value) {
       it(msg+": "+value, function(done) {
         var validationProperties = column.getValidationProperties();
         Validator(validationProperties, value, column.name).then(wrap(done)).catch(function(err){
