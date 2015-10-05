@@ -13,19 +13,21 @@ describe("Schema builder", function(){
 
   // build
   var Group = Table("Group").add(
-    Column("id", Type.UUID.primaryKey()),
-    Column("name", Type.VARCHAR(64).notNull())
+    Column("id", Type.UUID).primaryKey(),
+    Column("name", Type.VARCHAR(64)).notNull()
   );
 
   var User = Table("User").add(
-    Column("id", Type.UUID.primaryKey()),
-    Column("name", Type.VARCHAR(64).notNull()),
-    Column("about", Type.JSON.notNull())
+    Column("id", Type.UUID).primaryKey(),
+    Column("name", Type.VARCHAR(64)).notNull(),
+    Column("about", Type.JSON)
+      .notNull()
       .default({"info": "", "bulletPoints": []}),
-    Column("emails", Type.JSON.notNull())
+    Column("emails", Type.JSON)
+      .notNull()
       .default([]),
-    Column("createdAt", Type.TIMESTAMPTZ.notNull()),
-    Column("modifiedAt", Type.TIMESTAMPTZ.notNull()),
+    Column("createdAt", Type.TIMESTAMPTZ).notNull(),
+    Column("modifiedAt", Type.TIMESTAMPTZ).notNull(),
     Column("group", Type.UUID),
     ForeignKey("group", Group, "id")
   );
