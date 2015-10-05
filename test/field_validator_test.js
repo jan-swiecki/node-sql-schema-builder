@@ -4,6 +4,7 @@
 //
 //var Validator = require("../lib/validator/Validator");
 require("../index");
+var Autowire = require("../autowire");
 
 Autowire(function(_, uuid, path, assert, fs, FieldValidator, Builder){
   var currentDir = path.parse(module.id).dir;

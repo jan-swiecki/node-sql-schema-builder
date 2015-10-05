@@ -1,4 +1,5 @@
 require("../index");
+var Autowire = require("../autowire");
 
 Autowire(function(_, Builder, uuid, EntityValidator){
 

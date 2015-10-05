@@ -11,7 +11,8 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "mocha test/test.js test/field_validator_test.js test/entity_validator_test.js"
+    "test": "mocha test/test.js test/field_validator_test.js test/entity_validator_test.js",
+    "prepublish": "npm test"
   },
   "repository": {
     "type": "git",
