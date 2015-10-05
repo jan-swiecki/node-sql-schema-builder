@@ -5,7 +5,7 @@
 //var Validator = require("../lib/validator/Validator");
 require("../index");
 
-Autowire(function(_, uuid, path, assert, fs, Validator, Builder){
+Autowire(function(_, uuid, path, assert, fs, FieldValidator, Builder){
   var currentDir = path.parse(module.id).dir;
 
   /**
@@ -20,7 +20,7 @@ Autowire(function(_, uuid, path, assert, fs, Validator, Builder){
     };
   }
 
-  describe("Validator", function(){
+  describe("Field Validator", function(){
 
     var Table = Builder.Table;
     var Column = Builder.Column;
@@ -373,7 +373,7 @@ Autowire(function(_, uuid, path, assert, fs, Validator, Builder){
     function testSuccess(msg, column, value) {
       it(msg+": "+value, function(done) {
         var validationProperties = column.getValidationProperties();
-        Validator(validationProperties, value, column.name).then(wrap(done)).catch(function(err){
+        FieldValidator(validationProperties, value, column.name).then(wrap(done)).catch(function(err){
           if(err instanceof Error) {
             done(err);
           } else {
@@ -386,7 +386,7 @@ Autowire(function(_, uuid, path, assert, fs, Validator, Builder){
     function testError(msg, column, value) {
       it(msg+": "+value, function(done) {
         var validationProperties = column.getValidationProperties();
-        Validator(validationProperties, value, column.name).then(function(x){
+        FieldValidator(validationProperties, value, column.name).then(function(x){
           done(new Error("Succeeded but should fail"));
         }).catch(function(err){
           done();
