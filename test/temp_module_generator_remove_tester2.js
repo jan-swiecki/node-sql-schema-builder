@@ -8,6 +8,8 @@ Autowire(function(_, uuid, path, assert,
   var _module = TempModuleGenerator(code);
 
   var keys = Object.keys(require.cache);
-  process.stdout.write(keys[keys.length - 1]);
+  process.stdout.write(keys[keys.length - 1]+"\n");
+
+  throw new Error('test');
 
 });
