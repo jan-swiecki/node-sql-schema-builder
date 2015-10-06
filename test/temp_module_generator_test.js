@@ -54,7 +54,7 @@ Autowire(function(_, uuid, path, fs,
 
       var data = '';
       var err = '';
-      node.stdout.on('data', function (d) {
+      node.stdout.on('data', function(d) {
         data += d;
       });
 

@@ -60,8 +60,6 @@ Autowire(function(_, uuid, path, assert, fs,
     var orm = ORMGenerator(User).getOrm();
     var code = ORMGenerator(User).generateCode();
 
-    console.log(code);
-
     it('should return orm as function', function(){
       assert(_.isFunction(orm), "orm is function");
 
