@@ -31,13 +31,13 @@ Autowire(function(_, uuid, path, fs,
 
     });
 
-    it('should not remove module after process exit', function(done){
+    it('should remove module after process error', function(done){
 
       spawn('temp_module_generator_remove_tester2').then(function(modulePath){
         done(new Error('Should exit with code 1'))
       }).catch(function(output) {
         var modulePath = output.split("\n")[0];
-        if(fs.existsSync(modulePath)) {
+        if(! fs.existsSync(modulePath)) {
           done();
         } else {
           done(new Error("module \""+modulePath+"\" should still exist after process exit"));

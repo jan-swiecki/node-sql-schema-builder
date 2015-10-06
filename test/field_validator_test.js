@@ -1,7 +1,8 @@
 require("../index");
 var Autowire = require("../autowire");
 
-Autowire(function(_, uuid, path, assert, fs, FieldValidator, Builder){
+Autowire(function(_, uuid, path, assert, fs,
+                  FieldValidator, Builder, TimestampHelper){
   var currentDir = path.parse(module.id).dir;
 
   /**
@@ -265,18 +266,9 @@ Autowire(function(_, uuid, path, assert, fs, FieldValidator, Builder){
         var delta = yearAndAHalf * Math.random();
         var date = new Date(currTime + delta);
 
-        var timestamp = date.getFullYear()+
-          "-"+prefix(date.getMonth()+1)+
-          "-"+prefix(date.getDay()+1)+
-          " "+prefix(date.getHours())+
-          ":"+prefix(date.getMinutes())+
-          ":"+prefix(date.getSeconds());
+        var timestamp = TimestampHelper.toTimestamp(date);
 
         testSuccess('should succeed on good format', column, timestamp);
-
-        function prefix(x) {
-          return x < 10 ? "0"+x : x+"";
-        }
       }
 
     });

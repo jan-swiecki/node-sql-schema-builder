@@ -1,4 +1,5 @@
 var Autowire = require("autowire");
+Autowire.addImportPath("./lib");
 Autowire.addImportPath("./lib/types");
 Autowire.addImportPath("./lib/validator");
 Autowire.addImportPath("./lib/orm_generator");

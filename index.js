@@ -2,7 +2,7 @@ var Autowire = require("./autowire");
 
 module.exports = Autowire(function(Table, Column, Type, ForeignKey,
                                    InitTypes, FieldValidator, EntityValidator,
-                                   ORMGenerator) {
+                                   ORMGenerator, TimestampHelper) {
 
   return {
     Table: Table,
@@ -11,7 +11,8 @@ module.exports = Autowire(function(Table, Column, Type, ForeignKey,
     ForeignKey: ForeignKey,
     FieldValidator: FieldValidator,
     EntityValidator: EntityValidator,
-    ORMGenerator: ORMGenerator
+    ORMGenerator: ORMGenerator,
+    TimestampHelper: TimestampHelper
   }
 
 });
