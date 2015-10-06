@@ -1,8 +1,3 @@
-//var fs = require("fs");
-//var assert = require("assert");
-//var uuid = require("uuid");
-//
-//var Validator = require("../lib/validator/Validator");
 require("../index");
 var Autowire = require("../autowire");
 
