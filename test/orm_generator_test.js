@@ -55,11 +55,19 @@ Autowire(function(_, uuid, path, assert, fs,
       Column("modifiedAt", Type.TIMESTAMPTZ).notNull()
     );
 
-    var expectedOrmString = fs.readFileSync(__dirname + "/orm_expected_user.js", "utf8");
-    var actualCodeString = ORMGenerator(User).generateCode();
+    //var expectedOrmString = fs.readFileSync(__dirname + "/orm_expected_user.js", "utf8");
+    //var actualCodeString = ORMGenerator(User).generateCode();
+    var orm = ORMGenerator(User).getOrm();
+    var code = ORMGenerator(User).generateCode();
 
-    it('should generate proper ORM code', function(){
-      assert.strictEqual(actualCodeString, expectedOrmString, "code should be identical");
+    console.log(code);
+
+    it('should return orm as function', function(){
+      assert(_.isFunction(orm), "orm is function");
+
+      //TODO: verify getters/setters existance
+      //TODO: should test queries with some mock database
+      //assert.strictEqual(actualCodeString, expectedOrmString, "code should be identical");
     });
 
   });

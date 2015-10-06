@@ -53,6 +53,13 @@ User.prototype.create = function () {
   var sql = 'insert into "User" (\'id\', \'name\', \'about\', \'emails\', \'createdAt\', \'modifiedAt\') values (' + this.id + ', ' + this.name + ', ' + this.about + ', ' + this.emails + ', ' + this.createdAt + ', ' + this.modifiedAt + ')';
   return PgClient.query(sql);
 };
+User.prototype.save = function () {
+  if (!this.id) {
+    throw new Error('Cannot remove User, id is undefined');
+  }
+  var sql = 'update "User" set "id" = \'' + this.id + '\', "name" = \'' + this.name + '\', "about" = \'' + this.about + '\', "emails" = \'' + this.emails + '\', "createdAt" = \'' + this.createdAt + '\', "modifiedAt" = \'' + this.modifiedAt + '\'';
+  return PgClient.query(sql);
+};
 User.prototype.delete = function () {
   if (!this.id) {
     throw new Error('Cannot remove User, id is undefined');
