@@ -4,7 +4,7 @@
   "description": "schema builder",
   "main": "index.js",
   "dependencies": {
-    "autowire": "^2.2.1",
+    "autowire": "^2.2.2",
     "bluebird": "^2.10.2",
     "escodegen": "^1.7.0",
     "esprima": "^2.6.0",
