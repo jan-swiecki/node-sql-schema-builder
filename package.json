@@ -1,6 +1,6 @@
 {
   "name": "sql-schema-builder",
-  "version": "0.3.6",
+  "version": "0.3.7",
   "description": "schema builder",
   "main": "index.js",
   "dependencies": {
