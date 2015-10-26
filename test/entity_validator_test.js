@@ -195,7 +195,7 @@ Autowire(function(_, Builder, uuid, EntityValidator){
       EntityValidator(validationProperties, entity, table.name).then(function(){
         done(new Error("Succeeded but should fail"));
       }).catch(function(err){
-        if(err.name === expectedFailedField) {
+        if(err.field === expectedFailedField) {
           done();
         } else {
           done(new Error('Validation should fail on field \"'+expectedFailedField+'\" but failed on \"'+err.name+'\" field instead'));
